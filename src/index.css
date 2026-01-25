@@ -1,4 +1,16 @@
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap");
+
+:root {
+  /* Colors */
+  --gray-950: hsl(0, 3%, 94%);
+  --gray-400: hsl(0, 0%, 58%);
+
+  /* Typography */
+  --font-size-input: 18px;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+}
