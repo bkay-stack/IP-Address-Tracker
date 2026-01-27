@@ -17,7 +17,7 @@ const IPMain = () => {
           <h1 className="text-2xl text-white font-bold">IP Address Tracker</h1>
         </div>
 
-        <form className="absolute inset-x-0 top-27 px-4 flex justify-center">
+        <form className="absolute inset-x-0 top-23 px-4 flex justify-center">
           <div className="flex items-center">
             <input
               type="text"
@@ -47,12 +47,12 @@ const IPMain = () => {
           </h1>
         </div>
 
-        <form className="absolute inset-x-0 -bottom-6.25 px-4">
-          <div className="flex">
+        <form className="absolute inset-x-0 top-30 px-4">
+          <div className="flex justify-center">
             <input
               type="text"
               placeholder="Search for any IP address or domain"
-              className="w-full p-3 rounded-l-lg bg-(--gray-950) border border-gray-300 focus:outline-none"
+              className="w-196 p-3 rounded-l-lg bg-(--gray-950) border border-gray-300 focus:outline-none"
             />
             <button
               type="submit"
