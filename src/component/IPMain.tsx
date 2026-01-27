@@ -1,6 +1,8 @@
 import React from "react";
 import ImgPatternMobile from "../assets/images/pattern-bg-mobile.png";
 import ImgPatternDesktop from "../assets/images/pattern-bg-desktop.png";
+import ImgArrow from "../assets/images/icon-arrow.svg";
+import ImgMarker from "../assets/images/icon-location.svg";
 
 const IPMain = () => {
   return (
@@ -26,8 +28,8 @@ const IPMain = () => {
             />
             <button
               type="submit"
-              className="bg-black text-white p-3 rounded-r-lg hover:bg-gray-800">
-              &gt;
+              className="bg-black text-white p-5 rounded-r-lg hover:bg-gray-800">
+              <img src={ImgArrow} alt="arrow" />
             </button>
           </div>
         </form>
@@ -48,7 +50,7 @@ const IPMain = () => {
         </div>
 
         <form className="absolute inset-x-0 top-30 px-4">
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center">
             <input
               type="text"
               placeholder="Search for any IP address or domain"
@@ -56,8 +58,8 @@ const IPMain = () => {
             />
             <button
               type="submit"
-              className="bg-black text-white p-3 rounded-r-lg hover:bg-gray-800">
-              &gt;
+              className="bg-black text-white p-5 rounded-r-lg hover:bg-gray-800 flex  items-center justify-center">
+              <img src={ImgArrow} alt="arrow" />
             </button>
           </div>
         </form>
