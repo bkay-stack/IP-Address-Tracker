@@ -1,10 +1,33 @@
-import React from "react";
+// import React from "react";
 import ImgPatternMobile from "../assets/images/pattern-bg-mobile.png";
 import ImgPatternDesktop from "../assets/images/pattern-bg-desktop.png";
-import ImgArrow from "../assets/images/icon-arrow.svg";
-import ImgMarker from "../assets/images/icon-location.svg";
 
-const IPMain = () => {
+import ImgArrow from "../assets/images/icon-arrow.svg";
+// import ImgMarker from "../assets/images/icon-location.svg";
+import Map from "./Map";
+import { useState, useEffect } from "react";
+import type { IPData } from "../App";
+
+type IPMainProps = {
+  onDataFetched: (data: IPData | null) => void;
+  onLoading: (loading: boolean) => void;
+  onError: (error: string | null) => void;
+};
+const IPMain = ({
+  onDataFetched,
+  onLoading,
+  onError,
+}: IPMainProps): React.JSX.Element => {
+  async function lookup(target?: string): Promise<void> {
+    onLoading(true);
+    onError(null);
+    onDataFetched(null);
+  }
+
+  useEffect(() => {
+    lookup();
+  }, []);
+
   return (
     <section className="relative w-full">
       {/* Mobile background */}
@@ -12,7 +35,7 @@ const IPMain = () => {
         <img
           src={ImgPatternMobile}
           alt="Background pattern"
-          className="w-full h-75 object-cover"
+          className="w-full h-full object-cover"
         />
 
         <div className="absolute inset-0 flex  justify-center mt-10">
@@ -36,11 +59,11 @@ const IPMain = () => {
       </div>
 
       {/* Desktop background */}
-      <div className="relative w-full hidden md:block">
+      <div className="relative w-full hidden md:block h-full ">
         <img
           src={ImgPatternDesktop}
           alt="Background pattern"
-          className="w-full h-100 object-cover"
+          className="w-full h-full object-cover"
         />
 
         <div className="absolute inset-0 flex  justify-center  text-center mt-16">
@@ -64,6 +87,7 @@ const IPMain = () => {
           </div>
         </form>
       </div>
+      <Map lat={51.505} lng={-0.09} />
     </section>
   );
 };
