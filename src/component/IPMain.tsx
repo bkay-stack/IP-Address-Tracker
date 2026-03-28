@@ -18,18 +18,56 @@ const IPMain = ({
   onLoading,
   onError,
 }: IPMainProps): React.JSX.Element => {
+  // states for query and coordinates
+  const [query, setQuery] = useState<string>("");
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
+    null,
+  );
+
   async function lookup(target?: string): Promise<void> {
     onLoading(true);
     onError(null);
     onDataFetched(null);
+    try {
+      const url: string = target
+        ? `https://ipapi.co/${encodeURIComponent(target)}/json/`
+        : "https://ipapi.co/json/";
+
+      const res: Response = await fetch(url);
+      const data: IPData & { error?: boolean; reason?: string } =
+        await res.json();
+
+      if (data.error) throw new Error(data.reason || "Invalid IP or domain");
+
+      onDataFetched(data);
+      setCoords({ lat: data.latitude, lng: data.longitude });
+    } catch (e: unknown) {
+      const msg: string =
+        e instanceof Error ? e.message : "Could not fetch IP data";
+      onError(msg);
+    } finally {
+      onLoading(false);
+    }
   }
 
   useEffect(() => {
     lookup();
+    console.log(coords);
+    console.log(query);
   }, []);
 
+  //
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
+    e.preventDefault();
+    lookup(query.trim() || undefined);
+  }
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setQuery(e.target.value);
+  }
+
   return (
-    <section className="relative w-full">
+    <section className="relative w-full min-h-screen bg-gray-100 flex flex-col items-center justify-start ">
       {/* Mobile background */}
       <div className="relative w-full md:hidden">
         <img
@@ -42,10 +80,14 @@ const IPMain = ({
           <h1 className="text-2xl text-white font-bold">IP Address Tracker</h1>
         </div>
 
-        <form className="absolute inset-x-0 top-23 px-4 flex justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="absolute inset-x-0 top-30 px-4 mt-10 flex justify-center">
           <div className="flex items-center">
             <input
               type="text"
+              value={query}
+              onChange={handleInputChange}
               placeholder="Search for any IP address or domain"
               className="w-80 p-3 rounded-l-lg bg-(--gray-950) border border-gray-300 focus:outline-none"
             />
@@ -59,7 +101,7 @@ const IPMain = ({
       </div>
 
       {/* Desktop background */}
-      <div className="relative w-full hidden md:block h-full ">
+      <div className="relative w-full hidden md:block h-full  ">
         <img
           src={ImgPatternDesktop}
           alt="Background pattern"
@@ -72,10 +114,14 @@ const IPMain = ({
           </h1>
         </div>
 
-        <form className="absolute inset-x-0 top-30 px-4">
+        <form
+          onSubmit={handleSubmit}
+          className="absolute inset-x-0 top-30 px-4 mt-10 flex justify-center">
           <div className="flex justify-center items-center">
             <input
               type="text"
+              value={query}
+              onChange={handleInputChange}
               placeholder="Search for any IP address or domain"
               className="w-196 p-3 rounded-l-lg bg-(--gray-950) border border-gray-300 focus:outline-none"
             />
@@ -87,7 +133,9 @@ const IPMain = ({
           </div>
         </form>
       </div>
-      <Map lat={51.505} lng={-0.09} />
+      <div className="w-full h-screen">
+        {coords && <Map lat={coords.lat} lng={coords.lng} />}
+      </div>
     </section>
   );
 };

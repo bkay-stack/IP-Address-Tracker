@@ -20,7 +20,7 @@ function App(): React.JSX.Element {
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen relative ">
       <IPMain
         onDataFetched={setIpData}
         onLoading={setLoading}
