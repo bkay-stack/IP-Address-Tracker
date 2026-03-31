@@ -67,72 +67,47 @@ const IPMain = ({
   }
 
   return (
-    <section className="relative w-full min-h-screen bg-gray-100 flex flex-col items-center justify-start ">
-      {/* Mobile background */}
-      <div className="relative w-full md:hidden">
+    <section className="relative w-full">
+      {/* Background image */}
+      <div className="relative w-full">
         <img
           src={ImgPatternMobile}
           alt="Background pattern"
-          className="w-full h-full object-cover"
+          className="w-full h-50 md:h-70 object-cover md:hidden "
         />
-
-        <div className="absolute inset-0 flex  justify-center mt-10">
-          <h1 className="text-2xl text-white font-bold">IP Address Tracker</h1>
-        </div>
-
-        <form
-          onSubmit={handleSubmit}
-          className="absolute inset-x-0 top-30 px-4 mt-10 flex justify-center">
-          <div className="flex items-center">
-            <input
-              type="text"
-              value={query}
-              onChange={handleInputChange}
-              placeholder="Search for any IP address or domain"
-              className="w-80 p-3 rounded-l-lg bg-(--gray-950) border border-gray-300 focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="bg-black text-white p-5 rounded-r-lg hover:bg-gray-800">
-              <img src={ImgArrow} alt="arrow" />
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {/* Desktop background */}
-      <div className="relative w-full hidden md:block h-full  ">
         <img
           src={ImgPatternDesktop}
           alt="Background pattern"
-          className="w-full h-full object-cover"
+          className="w-full h-50 md:h-70 object-cover hidden md:block"
         />
 
-        <div className="absolute inset-0 flex  justify-center  text-center mt-16">
-          <h1 className="md:text-4xl text-white font-bold">
+        {/* Title and form — centered over image */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-4">
+          <h1 className="text-2xl md:text-4xl text-white font-bold">
             IP Address Tracker
           </h1>
-        </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="absolute inset-x-0 top-30 px-4 mt-10 flex justify-center">
-          <div className="flex justify-center items-center">
+          {/* Single responsive form */}
+          <form
+            onSubmit={handleSubmit}
+            className="flex items-center w-full max-w-xl">
             <input
               type="text"
               value={query}
               onChange={handleInputChange}
               placeholder="Search for any IP address or domain"
-              className="w-196 p-3 rounded-l-lg bg-(--gray-950) border border-gray-300 focus:outline-none"
+              className="flex-1 p-3 rounded-l-lg border border-gray-300 focus:outline-none"
             />
             <button
               type="submit"
-              className="bg-black text-white p-5 rounded-r-lg hover:bg-gray-800 flex  items-center justify-center">
+              className="bg-black text-white p-4 rounded-r-lg hover:bg-gray-800 flex items-center justify-center">
               <img src={ImgArrow} alt="arrow" />
             </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
+
+      {/* Map */}
       <div className="w-full h-screen">
         {coords && <Map lat={coords.lat} lng={coords.lng} />}
       </div>
